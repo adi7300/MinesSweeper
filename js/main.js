@@ -5,9 +5,9 @@ console.log('Sprint 1. - Adi M.')
 //Symbols
 const MINE = '💣';
 const FLAG = '⛳';
-const SMILEY = "/img/sNew.png";
-const LOSE = "/img/sLose.png";
-const WIN = "/img/sWin.png";
+const SMILEY = "img/sNew.png";
+const LOSE = "img/sLose.png";
+const WIN = "img/sWin.png";
 const WHITE_HEART = '🤍';
 const RED_HEART = '❤';
 
