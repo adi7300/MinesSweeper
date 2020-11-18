@@ -1,0 +1,100 @@
+*{
+    box-sizing:border-box;
+}
+body{
+    margin:0;
+    background-image: url("/img/bg.jpg");
+    background-repeat: no-repeat;
+    background-size:cover;
+
+}
+h1{
+    margin: auto;
+    text-align:center;
+    padding: 30px;
+    
+}
+div{
+    margin:auto;
+    display: block;
+}
+
+.score-time{
+    width:30%;
+    height:50px;
+    display: flex;
+    margin: auto;
+}
+.mines , .timer{
+    text-align: center;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+table{
+    margin:auto;
+    margin-top: 50px;
+}
+.status-smiley{
+    margin-left: 30px;
+    margin-right: 30px;
+    padding: 20px;
+    width: 100px;
+    height: 100px;
+}
+.level-scale{
+    text-align: center;
+    font-size: 20px;
+    color: rgb(53, 114, 160);
+    font-weight: 550;
+}
+
+.cell{
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    box-shadow: 1px 1px 3px 0px white;
+    /* border: 6px solid transparent; */
+}
+.close-cell{
+    background-color: grey;
+}
+.open-cell{
+    background-color: rgba(170, 237, 170, 0.324);
+
+}
+.num1{
+    color:blue;
+}
+
+.num2{
+    color:green;
+}
+
+.num3{
+color:rebeccapurple;
+}
+
+.num4{
+    color:goldenrod;
+}
+
+.num5{
+    color:red;
+}
+
+.num6{
+    color:rgb(0, 255, 149);
+}
+
+.num7{
+    color:rgb(255, 0, 221);
+}
+
+.num8{
+    color:rgb(0, 81, 128);
+}
+

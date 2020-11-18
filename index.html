@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Mine Sweeper</title>
+</head>
+
+<body onload="initGame()">
+    <h1>Mine Sweeper</h1>
+    <div class="level-scale"></div>
+    <div class="score-time">
+        <div>
+            <h3>Mines</h3>
+            <div class="mines">0</div>
+        </div>
+        <img class="status-smiley" onclick="initGame()"></img>
+        <div>
+            <h3>Timer</h3>
+            <div class="timer">00:00</div>
+        </div>
+
+    </div>
+    <div class="board"></div>
+    <script src="js/main.js"></script>
+    <script src="js/utils.js"></script>
+</body>
+
+</html>
