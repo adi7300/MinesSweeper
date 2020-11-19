@@ -25,6 +25,9 @@ var gLivesCounter = 1;
 var gHintsCounter = 1;
 var gShowHints = [];
 var gHintOn = false;
+var maxBeginnerScore = 0;
+var maxMediumScore = 0;
+var maxExpertScore = 0;
 
 var gGame = { isOn: true, shownCount: 0, markedCount: 0, secsPassed: 0 };
 
@@ -34,7 +37,7 @@ function initGame() {
     setLevelScale();
     gLivesCounter = 1;
     gHintsCounter = 1
-    gSelectedLevel = { size: 4, mines: 2, lives: 1 };
+    gSelectedLevel = { size: 4, mines: 2, lives: 1, name: 'Beginner' };
     startGame();
 
 }
@@ -44,20 +47,23 @@ function startGame() {
     gHintOn = false;
     gElapsedTime = 0;
     gGame = { isOn: true, shownCount: 0, markedCount: 0, secsPassed: 0 };
-    renderScoreTimer();
+
     document.querySelector(".mines").innerText = gSelectedLevel.mines;
+
     document.querySelector(".status-smiley").src = SMILEY;
     document.querySelector(".timer").innerText = '00:00'
     gBoard = buildBoard();
     renderBoard();
     renderHeartsHints();
-
+    showWinnerList();
 }
 
 function renderScoreTimer() {
 
-    document.querySelector(".score-time").innerHTML = '<div><h3>Mines</h3><div class="mines">0</div></div><img class="status-smiley" onclick="initGame()"></img><div><h3>Timer</h3> <div class="timer">00:00</div></div>';
+    document.querySelector(".mines").innerText = `${gSelectedLevel.mines - gGame.markedCount}</div></div>`;
 }
+
+
 function cellClicked(elCell, i, j) {
     if (!gGameStarted) {
         gStartTime = Date.now() - gElapsedTime;
@@ -72,6 +78,8 @@ function cellClicked(elCell, i, j) {
             return
         if (gHintOn) {
             giveHint(elCell, i, j);
+            gHintsCounter--;
+            renderHeartsHints();
         }
         else {
             if (gBoard[i][j].isMine) {
@@ -83,29 +91,15 @@ function cellClicked(elCell, i, j) {
                 }
                 renderCell({ i, j }, MINE);
                 gGame.isOn = false;
-                checkGameOver();
+                setTimeout(checkGameOver, 1000);
             }
             else if (!gBoard[i][j].isShown) {
                 expandShown(elCell, i, j);
-                checkGameOver();
+                setTimeout(checkGameOver, 1000);
             }
-            console.log('gGame counter is:', gGame.shownCount);
         }
     }
     else return;
-}
-
-function checkGameOver() {
-    console.log('Game over check');
-    if ((gGame.shownCount + gGame.markedCount) === gSelectedLevel.size ** 2) {
-        stopTimer();
-        document.querySelector(".status-smiley").src = WIN;
-    }
-    else if (!gGame.isOn) {
-        stopTimer();
-        document.querySelector(".status-smiley").src = LOSE;
-
-    }
 }
 
 function expandShown(elCell, i, j) {
@@ -116,17 +110,43 @@ function expandShown(elCell, i, j) {
             if (i < 0 || i >= gSelectedLevel.size) continue;
             for (var j = cellJ - 1; j <= cellJ + 1; j++) {
                 if (j < 0 || j >= gSelectedLevel.size) continue;
-                if (!gBoard[i][j].isShown) gGame.shownCount++;
-                gBoard[i][j].isShown = true;
+                if (!gBoard[i][j].isMarked) {
+                    if (!gBoard[i][j].isShown) {
+                        gGame.shownCount++;
+                    }
+                    gBoard[i][j].isShown = true;
+                    // expandShown(elCell, i, j);
+                }
             }
         }
-        renderBoard();
     }
     else {
         gBoard[i][j].isShown = true;
         gGame.shownCount++;
         renderCell({ i, j }, gBoard[i][j].minesArountCount);
+        return false;
+
     }
+    renderBoard();
+}
+
+
+function selfClicked() {
+    var nonMinesColseCells = [];
+    for (var i = 0; i < gBoard.length; i++) {
+        for (var j = 0; j < gBoard[i].length; j++) {
+            if ((!gBoard[i][j].isMine) && (!gBoard[i][j].isShown))
+                nonMinesColseCells.push({ i, j });
+        }
+    }
+    var safeCell = getRandomInteger(1, nonMinesColseCells.length - 1);
+
+    var elSafeCell = document.querySelector(`[data-id="${nonMinesColseCells[safeCell].i}-${nonMinesColseCells[safeCell].j}"]`);
+    console.log(elSafeCell);
+    elSafeCell.classList.add("safe-cell");
+    renderBoard();
+    ///to be continue...
+
 }
 
 function setFlag(event, i, j) {
@@ -134,17 +154,18 @@ function setFlag(event, i, j) {
         if (gBoard[i][j].isShown === true) {
             alert('Cannot flag shown cell');
         }
-
         // unflag cell
         else if (gBoard[i][j].isMarked) {
             gBoard[i][j].isMarked = false;
             gGame.markedCount--;
-            renderCell({ i, j }, '');
+            document.querySelector(".mines").innerText = `${gSelectedLevel.mines - gGame.markedCount}`;
+            renderBoard();
         }
         // flag cell
         else {
             gBoard[i][j].isMarked = true;
             gGame.markedCount++;
+            document.querySelector(".mines").innerText = `${gSelectedLevel.mines - gGame.markedCount}`;
             renderCell({ i, j }, FLAG);
             checkGameOver();
         }
@@ -170,6 +191,8 @@ function setDifficulty(levelCell) {
         if (i === levelCell) {
             gSelectedLevel.size = gLevels[i].size;
             gSelectedLevel.mines = gLevels[i].mines;
+            gSelectedLevel.name = gLevels[i].name;
+
             gHintsCounter = gLivesCounter = gSelectedLevel.lives = gLevels[i].lives;
             gLevels[levelCell].isSelected = true;
         }
@@ -188,18 +211,14 @@ function giveHint(elCell, cellI, cellJ) {
             if (j < 0 || j >= gSelectedLevel.size) continue;
             {
                 if (!gBoard[i][j].isShown) {
-                    document.querySelector(`[data-id="${i}-${j}"]`).classList.add('hinted');
-                    console.log(gBoard[i][j].isShown);
+                    //  document.querySelector(`[data-id="${i}-${j}"]`).classList.add('hinted');
                     gShowHints.push({ i, j });
                     gBoard[i][j].isShown = true;
                 }
             }
         }
     }
-    console.log('show arr', gShowHints);
     renderBoard();
-    console.log('elCell is:', elCell)
-    //elCell.src = "img/emptyLamp.png";
     setTimeout(closeHint, 1000);
 
 }
@@ -209,6 +228,7 @@ function closeHint() {
         gBoard[gShowHints[i].i][gShowHints[i].j].isShown = false;
     }
     renderBoard();
+    gHintOn = false;
 
 }
 
@@ -241,6 +261,61 @@ function renderHeartsHints() {
 
 }
 
+
+function checkGameOver() {
+    console.log('checkGameOver called');
+    if ((gGame.shownCount + gSelectedLevel.mines) === gSelectedLevel.size ** 2) {
+        gGame.isOn = false
+        var userTime = timeToString(gElapsedTime);
+        userTime = userTime.replace(2, '.');
+        gGame.secsPassed = parseFloat(userTime);
+        stopTimer();
+        document.querySelector(".status-smiley").src = WIN;
+        updateWinnersList(userTime);
+    }
+    else if (!gGame.isOn) {
+        stopTimer();
+        document.querySelector(".status-smiley").src = LOSE;
+
+    }
+}
+
+function updateWinnersList(userScore) {
+    if (typeof (Storage) !== 'undefined') {
+        var level = gSelectedLevel.name.toLowerCase();
+        var levelValue = localStorage.getItem(level);
+        if (levelValue) {
+            var localUser = levelValue.split('^');
+            if (userScore < localUser[1]) {
+                var userName = prompt('You got the best score! please enter your name:');
+                localStorage.setItem(level, userName + '^' + userScore);
+            }
+        }
+        else {
+            var userName = prompt('You got the best score! please enter your name:');
+            localStorage.setItem(level, userName + '^' + userScore);
+        }
+        if (userName !== 'undefined')
+            document.querySelector(`.${level}`).innerText = userName;
+
+    } else {
+        alert('Sorry, your browser does not support Web Storage');
+
+    }
+}
+function showWinnerList() {
+    if (typeof (Storage) !== 'undefined') {
+        for (var i = 0; i < gLevels.length; i++) {
+            var level = gLevels[i].name.toLowerCase();
+            var userData = localStorage.getItem(level);
+            if (userData !== 'undefined' && userData) {
+                var localUser = userData.split('^');
+                document.querySelector(`.${level}`).innerText = localUser[0];
+            }
+
+        }
+    }
+}
 function createLevelList() {
     gLevels.push(createLevel(0, 'Beginner', 4, 2, 1, true));
     gLevels.push(createLevel(1, 'Medium', 8, 12, 2, false));

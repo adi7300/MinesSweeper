@@ -8,10 +8,21 @@
     <title>Mine Sweeper</title>
 </head>
 
-<body style="background-image: url('img/bg.jpg')" onload="initGame()">
+<body onload="initGame()" style="background-image: url('img/bg.jpg')">
     <h1>Mine Sweeper</h1>
+
     <div class="level-scale"></div>
-    <div class="score-time"></div>
+    <div class="mines-time-bar">
+        <div class=mines-div>
+            <h3>Mines:</h3>
+            <div class="mines">0</div>
+        </div>
+        <img class="status-smiley" onclick="initGame()">
+        <div class=timer-div>
+            <h3>Timer:</h3>
+            <div class="timer">00:00</div>
+        </div>
+    </div>
     <div class="lives-modal">
         <div class="modal-body"><img class="mine-smiley" src="img/sMine.png">Oh no...This is a mine</div>
         <div class="modal-footer">
@@ -21,6 +32,44 @@
     </div>
     <div class="board"></div>
     <div class="hearts-hints"></div>
+    <div class="safe-undo">
+        <button class="safe" type="button" onclick="selfClicked()">Safe Click</button>
+        <button class="undo" type="button">Undo</button>
+    </div>
+    <div class="winners-list">
+        <div class="beginners">
+            <table>
+                <thead>Beginners</thead>
+                <div>
+                    <tr>
+                        <td class="beginner"></td>
+                    </tr>
+                </div>
+            </table>
+        </div>
+        <div class="mediums">
+            <table>
+                <thead>Medium</thead>
+                <div>
+                    <tr>
+                        <td class="medium"></td>
+                    </tr>
+
+                </div>
+            </table>
+        </div>
+        <div class="experts">
+            <table>
+                <thead>Experts</thead>
+                <div>
+                    <tr>
+                        <td class="expert"></td>
+                    </tr>
+                </div>
+            </table>
+        </div>
+    </div>
+
     <script src="js/main.js"></script>
     <script src="js/utils.js"></script>
 </body>

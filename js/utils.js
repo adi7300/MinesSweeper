@@ -70,12 +70,12 @@ function renderBoard() {
     document.querySelector(".board").innerHTML = strHtml;
 }
 
-function renderCell(location, value) {
-    // Select the elCell and set the value
-    var elCell = document.querySelector(`.cell${location.i}-${location.j}`);
-    elCell.innerHTML = value;
+// function renderCell(location, value) {
+//     // Select the elCell and set the value
+//     var elCell = document.querySelector(`.cell${location.i}-${location.j}`);
+//     elCell.innerHTML = value;
 
-}
+// }
 
 function getRandomInteger(min, max) {
     var num = Math.floor(Math.random() * Math.floor(max + 1));
@@ -109,7 +109,7 @@ function renderCell(pos, value) {
 function startTimer() {
     var elTimer = document.querySelector(".timer");
     gElapsedTime = Date.now() - gStartTime;
-    elTimer.innerText = `${timeToString(gElapsedTime)}`
+    elTimer.innerText = `${timeToString(gElapsedTime)}`;
 }
 
 function timeToString(time) {
@@ -129,5 +129,7 @@ function timeToString(time) {
 }
 
 function stopTimer() {
-    clearInterval(gTimerInterval);
+    console.log('Counter stops');
+    if (!gGame.isOn)
+        clearInterval(gTimerInterval);
 }

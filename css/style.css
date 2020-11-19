@@ -3,20 +3,47 @@
 }
 body{
     margin:0;
-    background-image: url("/img/bg.jpg");
+    /* background-image: url("/img/bg.jpg"); */
     background-repeat: no-repeat;
     background-size:150%;
-
+    
 }
+
 h1{
     margin: auto;
     text-align:center;
-    padding: 30px;
-    
+    padding: 30px;       
 }
+        
 div{
     margin:auto;
     display: block;
+}
+
+td{
+    color: white;
+    text-align: center;
+    width: 200px;
+    flex-wrap: nowrap;
+    
+}
+
+.winners-list{
+    background-color: rgba(0, 0, 0, 0.2);
+    margin-left:auto;
+    margin-right:auto;
+    width:380px;
+}
+
+.beginners , .mediums , .experts{
+    text-align: center;
+    font-size: 20px;    
+    padding: 20px 30px;    
+    display:  table-cell;
+    width: 60px;
+}
+thead{
+    color:black;
 }
 
 .lives-modal {
@@ -43,8 +70,7 @@ div{
     display: block;
     margin: auto;
 }
-.modal-button
-{
+.modal-button{
     border: 0px solid white;
     background-color: rgba(0, 128, 0, 0.426);
     font-size: 15px;
@@ -71,33 +97,50 @@ div{
     
     
 }
-.score-time {
-    width:30%;
-    height:50px;
+
+.mines-time-bar{
+    width: 200px;
     display: flex;
-    margin: auto;
+    text-align: center;
+    margin-bottom: -50px;
+
+}
+.mines-div , .timer-div {
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: 0;
+    width:40px;
+    height:50px;
+   
 }
 
-.hearts-hints{
+.hearts-hints, .safe-undo{
     background-color: rgba(236, 237, 170, 0.324);
     width:30%;
     height:50px;
+    border-radius: 5px;
     display: flex;
-    margin-top:20px; 
+    margin-top:10px; 
+    margin-bottom: 10px;
 }
-.mines , .timer{    
-    text-align: center;
-    font-weight: 400;
-    font-size: 20px;
+.safe, .undo{
+    margin: auto;
+    border: 0;
+    height: 35px;
+    width: 100px;
+    border-radius: 5px;
+    background: rgba(0, 162, 255, 0.888);
+    font-weight: 600;
+    font-size: 16px;
 }
 
 table{
     margin:auto;
     margin-top: 50px;
 }
+
 .status-smiley{
-    margin-left: 30px;
-    margin-right: 30px;
+    display: inline;
     padding: 20px;
     width: 100px;
     height: 100px;
@@ -118,13 +161,16 @@ table{
     font-weight: 600;
     box-shadow: 1px 1px 3px 0px white;
 }
+
 .close-cell{
     background-color: grey;
 }
+
 .open-cell{
     background-color: rgba(170, 237, 170, 0.324);
 
 }
+
 .num1{
     color:blue;
 }
@@ -156,4 +202,39 @@ color:rebeccapurple;
 .num8{
     color:rgb(0, 81, 128);
 }
+
+.safe-cell{
+    background-color: red;
+}
+
+/* .rTable {
+    display: table;
+    width: 60%;
+    
+ }
+ .rTableRow {
+    display: table-row;
+ }
+ .rTableHeading {
+    display: table-header-group;
+    background-color: #ddd;
+ }
+ .rTableCell, .rTableHead {
+    display: table-cell;
+    padding: 3px 10px;
+    text-align: center;
+ }
+ .rTableHeading {
+    display: table-header-group;
+    background-color: #ddd;
+    font-weight: bold;
+ }
+ .rTableFoot {
+    display: table-footer-group;
+    font-weight: bold;
+    background-color: #ddd;
+ }
+ .rTableBody {
+    display: table-row-group;
+ } */
 
