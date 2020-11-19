@@ -5,7 +5,7 @@ body{
     margin:0;
     background-image: url("/img/bg.jpg");
     background-repeat: no-repeat;
-    background-size:cover;
+    background-size:150%;
 
 }
 h1{
@@ -19,13 +19,73 @@ div{
     display: block;
 }
 
-.score-time{
+.lives-modal {
+    display:none;
+    width: 200px;
+    height: 120px;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -100px;
+    background-color: rgba(134, 182, 255, 0.93);
+    border-radius: 5px;
+    text-align: center;
+  }
+
+.modal-body{
+    margin: auto;
+    padding-top: 20px;
+    font-size: 16px;
+}
+.mine-smiley{
+    width: 20px;
+    display: block;
+    margin: auto;
+}
+.modal-button
+{
+    border: 0px solid white;
+    background-color: rgba(0, 128, 0, 0.426);
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 10px;
+    width: 70px;
+    height: 30px;
+    margin-left:65px;
+    margin-top: 20px;
+    display: block;
+}
+
+.heart{
+    display: inline;
+    width: 25px; 
+    
+}
+.blur{
+     filter: blur(1px); 
+}
+.hint{
+    display: inline;
+    width: 40px;
+    
+    
+}
+.score-time {
     width:30%;
     height:50px;
     display: flex;
     margin: auto;
 }
-.mines , .timer{
+
+.hearts-hints{
+    background-color: rgba(236, 237, 170, 0.324);
+    width:30%;
+    height:50px;
+    display: flex;
+    margin-top:20px; 
+}
+.mines , .timer{    
     text-align: center;
     font-weight: 400;
     font-size: 20px;
@@ -57,7 +117,6 @@ table{
     font-size: 20px;
     font-weight: 600;
     box-shadow: 1px 1px 3px 0px white;
-    /* border: 6px solid transparent; */
 }
 .close-cell{
     background-color: grey;

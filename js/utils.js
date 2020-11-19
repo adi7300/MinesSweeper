@@ -130,5 +130,4 @@ function timeToString(time) {
 
 function stopTimer() {
     clearInterval(gTimerInterval);
-    // if (confirm("You've done it! do you want to play again")) startNewGame();
 }

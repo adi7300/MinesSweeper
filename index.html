@@ -11,19 +11,16 @@
 <body onload="initGame()">
     <h1>Mine Sweeper</h1>
     <div class="level-scale"></div>
-    <div class="score-time">
-        <div>
-            <h3>Mines</h3>
-            <div class="mines">0</div>
+    <div class="score-time"></div>
+    <div class="lives-modal">
+        <div class="modal-body"><img class="mine-smiley" src="img/sMine.png">Oh no...This is a mine</div>
+        <div class="modal-footer">
+            <button type="button" class="modal-button"
+                onclick="document.querySelector('.lives-modal').style.display='none'">Close</button>
         </div>
-        <img class="status-smiley" onclick="initGame()"></img>
-        <div>
-            <h3>Timer</h3>
-            <div class="timer">00:00</div>
-        </div>
-
     </div>
     <div class="board"></div>
+    <div class="hearts-hints"></div>
     <script src="js/main.js"></script>
     <script src="js/utils.js"></script>
 </body>
