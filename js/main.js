@@ -23,6 +23,7 @@ var gElapsedTime = 0;
 var gTimerInterval = 0;
 var gLivesCounter = 1;
 var gHintsCounter = 1;
+var gSafeCounter = 1;
 var gShowHints = [];
 var gHintOn = false;
 var maxBeginnerScore = 0;
@@ -37,6 +38,7 @@ function initGame() {
     setLevelScale();
     gLivesCounter = 1;
     gHintsCounter = 1
+    gSafeCounter = 1;
     gSelectedLevel = { size: 4, mines: 2, lives: 1, name: 'Beginner' };
     startGame();
 
@@ -131,22 +133,25 @@ function expandShown(elCell, i, j) {
 }
 
 
-function selfClicked() {
-    var nonMinesColseCells = [];
+function safeClicked() {
+    console.log("safe click pressed");
+    var nonMinesCloseCells = [];
     for (var i = 0; i < gBoard.length; i++) {
         for (var j = 0; j < gBoard[i].length; j++) {
-            if ((!gBoard[i][j].isMine) && (!gBoard[i][j].isShown))
-                nonMinesColseCells.push({ i, j });
+            if ((!gBoard[i][j].isMine) && (!gBoard[i][j].isShown)) nonMinesCloseCells.push({ i, j });
         }
     }
-    var safeCell = getRandomInteger(1, nonMinesColseCells.length - 1);
+    var safeCell = getRandomInteger(1, nonMinesCloseCells.length - 1);
 
-    var elSafeCell = document.querySelector(`[data-id="${nonMinesColseCells[safeCell].i}-${nonMinesColseCells[safeCell].j}"]`);
+    var elSafeCell = document.querySelector(`[data-id="${nonMinesCloseCells[safeCell].i}-${nonMinesCloseCells[safeCell].j}"]`);
     console.log(elSafeCell);
-    elSafeCell.classList.add("safe-cell");
-    renderBoard();
-    ///to be continue...
-
+    if (gSafeCounter > 0) {
+        elSafeCell.classList.add("safe-cell");
+        setTimeout(function () {
+            elSafeCell.classList.remove("safe-cell");
+        }, 1000)
+    }
+    gSafeCounter--;
 }
 
 function setFlag(event, i, j) {
@@ -193,7 +198,7 @@ function setDifficulty(levelCell) {
             gSelectedLevel.mines = gLevels[i].mines;
             gSelectedLevel.name = gLevels[i].name;
 
-            gHintsCounter = gLivesCounter = gSelectedLevel.lives = gLevels[i].lives;
+            gSafeCounter = gHintsCounter = gLivesCounter = gSelectedLevel.lives = gLevels[i].lives;
             gLevels[levelCell].isSelected = true;
         }
     }

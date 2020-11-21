@@ -32,7 +32,7 @@ td{
     background-color: rgba(0, 0, 0, 0.2);
     margin-left:auto;
     margin-right:auto;
-    width:380px;
+    width:400px;
 }
 
 .beginners , .mediums , .experts{
@@ -111,10 +111,9 @@ thead{
     margin-top: 0;
     width:40px;
     height:50px;
-   
 }
 
-.hearts-hints, .safe-undo{
+.hearts-hints {
     background-color: rgba(236, 237, 170, 0.324);
     width:30%;
     height:50px;
@@ -123,14 +122,27 @@ thead{
     margin-top:10px; 
     margin-bottom: 10px;
 }
+
+.safe-undo{
+    background-color: rgba(236, 237, 170, 0.324);
+    width:30%;
+    height:80px;
+    border-radius: 5px;
+    display: flex;
+    margin-top:10px; 
+    margin-bottom: 10px;
+}
+
 .safe, .undo{
     margin: auto;
     border: 0;
-    height: 35px;
+    height: 55px;
     width: 100px;
     border-radius: 5px;
     background: rgba(0, 162, 255, 0.888);
     font-weight: 600;
+    vertical-align: center;
+    text-align: center;
     font-size: 16px;
 }
 
@@ -204,7 +216,8 @@ color:rebeccapurple;
 }
 
 .safe-cell{
-    background-color: red;
+    background-color: rgba(0, 128, 0, 0.666);
+    filter: blur(1px);
 }
 
 /* .rTable {
